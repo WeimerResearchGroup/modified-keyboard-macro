@@ -7,6 +7,7 @@ const CommandSequence = function() {
         sequence.length = 0;
     };
     const push = function(commandSpec) {
+        commandSpec['timestamp']=new Date().toISOString();
         sequence.push(commandSpec);
     };
     const optimize = function() {
