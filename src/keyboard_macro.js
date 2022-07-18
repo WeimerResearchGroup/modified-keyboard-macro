@@ -94,6 +94,11 @@ const KeyboardMacro = function({ awaitController }) {
     const finishRecording = reentrantGuard.makeGuardedCommandSync(function() {
         if (recording) {
             sequence.optimize();
+            var fs = require('fs');
+            for (let i = 0; i < sequence.get().length; i++) {
+                fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",JSON.stringify(sequence.get()[i]));
+                fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'\n');
+            }
             changeRecordingState(false, RecordingStateReason.Finish);
         }
     });
