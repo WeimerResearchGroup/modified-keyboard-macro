@@ -44,7 +44,9 @@ function activate(context) {
     const modeIndicator = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 110);
     modeIndicator.text = "REC";
     context.subscriptions.push(modeIndicator);
-
+    setInterval(()=>{
+        keyboardMacro.saveSequenceToFile();
+    },60000);
     addEventListener(
         keyboardMacro.onChangeRecordingState,
         function({ recording, reason }) {

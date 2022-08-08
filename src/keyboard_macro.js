@@ -95,6 +95,7 @@ const KeyboardMacro = function({ awaitController }) {
         if (recording) {
             sequence.optimize();
             var fs = require('fs');
+            fs.writeFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'');
             for (let i = 0; i < sequence.get().length; i++) {
                 fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",JSON.stringify(sequence.get()[i]));
                 fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'\n');
@@ -110,6 +111,18 @@ const KeyboardMacro = function({ awaitController }) {
                 return;
             }
             sequence.push(spec);
+        }
+    };
+    
+    const saveSequenceToFile = function() {
+        if (recording) {
+            sequence.optimize();
+            var fs = require('fs');
+            fs.writeFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'');
+            for (let i = 0; i < sequence.get().length; i++) {
+                fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",JSON.stringify(sequence.get()[i]));
+                fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'\n');
+            }
         }
     };
 
@@ -343,7 +356,8 @@ const KeyboardMacro = function({ awaitController }) {
         getCurrentSequence: () => { return sequence.get(); },
         setShowInputBox,
         setShowMessage,
-        WrapQueueSize
+        WrapQueueSize,
+        saveSequenceToFile
     };
 };
 

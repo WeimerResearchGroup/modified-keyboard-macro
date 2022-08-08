@@ -2,7 +2,7 @@
 	"name": "keystroke-recording",
 	"displayName": "Keystroke Recording",
 	"description": "Recordable keyboard macro for Visual Studio Code",
-	"version": "0.12.3",
+	"version": "1.0.1",
 	"publisher": "WRG",
 	"engines": {
 		"vscode": "^1.68.0"
