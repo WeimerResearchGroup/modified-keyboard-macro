@@ -28,6 +28,7 @@ const KeyboardMacro = function({ awaitController }) {
     let shouldAbortPlayback = false;
     const sequence = CommandSequence();
     const internalCommands = new Map();
+    let last_flushed_sequence_index = 0;
 
     let printError = defaultPrintError;
     function defaultPrintError(error) {
@@ -82,6 +83,7 @@ const KeyboardMacro = function({ awaitController }) {
     const startRecording = reentrantGuard.makeGuardedCommandSync(function() {
         if (!recording) {
             sequence.clear();
+            last_flushed_sequence_index=0;
             changeRecordingState(true, RecordingStateReason.Start);
         }
     });
@@ -93,13 +95,14 @@ const KeyboardMacro = function({ awaitController }) {
     });
     const finishRecording = reentrantGuard.makeGuardedCommandSync(function() {
         if (recording) {
-            sequence.optimize();
+            //sequence.optimize();
             var fs = require('fs');
-            fs.writeFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'');
-            for (let i = 0; i < sequence.get().length; i++) {
+            let new_flushed_sequence_index=sequence.get().length;
+            for (let i = last_flushed_sequence_index; i < new_flushed_sequence_index; i++) {
                 fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",JSON.stringify(sequence.get()[i]));
                 fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'\n');
             }
+            last_flushed_sequence_index=new_flushed_sequence_index;
             changeRecordingState(false, RecordingStateReason.Finish);
         }
     });
@@ -116,13 +119,14 @@ const KeyboardMacro = function({ awaitController }) {
     
     const saveSequenceToFile = function() {
         if (recording) {
-            sequence.optimize();
+            //sequence.optimize();
             var fs = require('fs');
-            fs.writeFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'');
-            for (let i = 0; i < sequence.get().length; i++) {
+            let new_flushed_sequence_index=sequence.get().length;
+            for (let i = last_flushed_sequence_index; i < new_flushed_sequence_index; i++) {
                 fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",JSON.stringify(sequence.get()[i]));
                 fs.appendFileSync("/workspaces/CodeSpaceTest/extension-test/keystrokes.txt",'\n');
             }
+            last_flushed_sequence_index=new_flushed_sequence_index;
         }
     };
 

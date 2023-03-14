@@ -2,7 +2,7 @@
 	"name": "keystroke-recording",
 	"displayName": "Keystroke Recording",
 	"description": "Record keystokes and write to keystrokes.txt every 1min",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"publisher": "WRG",
 	"engines": {
 		"vscode": "^1.68.0"
